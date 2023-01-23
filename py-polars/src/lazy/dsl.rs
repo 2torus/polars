@@ -1616,30 +1616,33 @@ impl PyExpr {
             .into()
     }
 
-    pub fn ewm_mean(&self, alpha: f64, adjust: bool, min_periods: usize) -> Self {
+    pub fn ewm_mean(&self, alpha: f64, adjust: bool, min_periods: usize, ignore_na: bool) -> Self {
         let options = EWMOptions {
             alpha,
             adjust,
             bias: false,
             min_periods,
+            ignore_na,
         };
         self.inner.clone().ewm_mean(options).into()
     }
-    pub fn ewm_std(&self, alpha: f64, adjust: bool, bias: bool, min_periods: usize) -> Self {
+    pub fn ewm_std(&self, alpha: f64, adjust: bool, bias: bool, min_periods: usize, ignore_na: bool) -> Self {
         let options = EWMOptions {
             alpha,
             adjust,
             bias,
             min_periods,
+            ignore_na,
         };
         self.inner.clone().ewm_std(options).into()
     }
-    pub fn ewm_var(&self, alpha: f64, adjust: bool, bias: bool, min_periods: usize) -> Self {
+    pub fn ewm_var(&self, alpha: f64, adjust: bool, bias: bool, min_periods: usize, ignore_na: bool) -> Self {
         let options = EWMOptions {
             alpha,
             adjust,
             bias,
             min_periods,
+            ignore_na,
         };
         self.inner.clone().ewm_var(options).into()
     }

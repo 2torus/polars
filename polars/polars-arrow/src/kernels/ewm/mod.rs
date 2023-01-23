@@ -11,6 +11,7 @@ pub struct EWMOptions {
     pub adjust: bool,
     pub bias: bool,
     pub min_periods: usize,
+    pub ignore_na: bool
 }
 
 impl Default for EWMOptions {
@@ -20,6 +21,7 @@ impl Default for EWMOptions {
             adjust: true,
             bias: false,
             min_periods: 1,
+            ignore_na: true,
         }
     }
 }

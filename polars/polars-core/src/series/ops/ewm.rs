@@ -20,12 +20,13 @@ impl Series {
                     options.alpha as f32,
                     options.adjust,
                     options.min_periods,
+                    options.ignore_na,
                 );
                 Series::try_from((self.name(), Box::new(result) as ArrayRef))
             }
             DataType::Float64 => {
                 let xs = self.f64().unwrap();
-                let result = ewm_mean(xs, options.alpha, options.adjust, options.min_periods);
+                let result = ewm_mean(xs, options.alpha, options.adjust, options.min_periods, options.ignore_na);
                 Series::try_from((self.name(), Box::new(result) as ArrayRef))
             }
             _ => self.cast(&DataType::Float64)?.ewm_mean(options),
@@ -47,6 +48,7 @@ impl Series {
                     options.adjust,
                     options.bias,
                     options.min_periods,
+                    options.ignore_na,
                 );
                 Series::try_from((self.name(), Box::new(result) as ArrayRef))
             }
@@ -58,6 +60,7 @@ impl Series {
                     options.adjust,
                     options.bias,
                     options.min_periods,
+                    options.ignore_na,
                 );
                 Series::try_from((self.name(), Box::new(result) as ArrayRef))
             }
@@ -80,6 +83,7 @@ impl Series {
                     options.adjust,
                     options.bias,
                     options.min_periods,
+                    options.ignore_na,
                 );
                 Series::try_from((self.name(), Box::new(result) as ArrayRef))
             }
@@ -91,6 +95,7 @@ impl Series {
                     options.adjust,
                     options.bias,
                     options.min_periods,
+                    options.ignore_na,
                 );
                 Series::try_from((self.name(), Box::new(result) as ArrayRef))
             }

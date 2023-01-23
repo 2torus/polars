@@ -13,6 +13,7 @@ pub fn ewm_std<I, T>(
     adjust: bool,
     bias: bool,
     min_periods: usize,
+    ignore_na: bool,
 ) -> PrimitiveArray<T>
 where
     I: IntoIterator<Item = Option<T>>,
@@ -77,6 +78,7 @@ pub fn ewm_var<I, T>(
     adjust: bool,
     bias: bool,
     min_periods: usize,
+    ignore_na: bool,
 ) -> PrimitiveArray<T>
 where
     I: IntoIterator<Item = Option<T>>,
