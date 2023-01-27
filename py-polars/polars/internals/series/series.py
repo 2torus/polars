@@ -4633,6 +4633,7 @@ class Series:
         alpha: float | None = None,
         adjust: bool = True,
         min_periods: int = 1,
+        ignore_na: bool = True,
     ) -> Series:
         r"""
         Exponentially-weighted moving average.
@@ -4672,6 +4673,19 @@ class Series:
         min_periods
             Minimum number of observations in window required to have a value
             (otherwise result is null).
+        ignore_na : bool, default True
+            Ignore missing values when calculating weights.
+            - When ``ignore_na=False`` , weights are based on absolute positions.
+            For example, the weights of :math:`x_0` and :math:`x_2` used in calculating
+            the final weighted average of [:math:`x_0`, None, :math:`x_2`] are
+            :math:`(1-\alpha)^2` and :math:`1` if ``adjust=True``, and
+            :math:`(1-\alpha)^2` and :math:`\alpha` if ``adjust=False``.
+            - When ``ignore_na=True`` (default), weights are based
+            on relative positions. For example, the weights of :math:`x_0` and :math:`x_2`
+            used in calculating the final weighted average of
+            [:math:`x_0`, None, :math:`x_2`] are :math:`1-\alpha` and :math:`1` if
+            ``adjust=True``, and :math:`1-\alpha` and :math:`\alpha` if ``adjust=False``.
+
 
         """
 
@@ -4684,6 +4698,7 @@ class Series:
         adjust: bool = True,
         bias: bool = False,
         min_periods: int = 1,
+        ignore_na: bool = True,
     ) -> Series:
         r"""
         Exponentially-weighted moving standard deviation.
@@ -4726,6 +4741,19 @@ class Series:
         min_periods
             Minimum number of observations in window required to have a value
             (otherwise result is null).
+        ignore_na : bool, default True
+            Ignore missing values when calculating weights.
+            - When ``ignore_na=False`` , weights are based on absolute positions.
+            For example, the weights of :math:`x_0` and :math:`x_2` used in calculating
+            the final weighted average of [:math:`x_0`, None, :math:`x_2`] are
+            :math:`(1-\alpha)^2` and :math:`1` if ``adjust=True``, and
+            :math:`(1-\alpha)^2` and :math:`\alpha` if ``adjust=False``.
+            - When ``ignore_na=True`` (default), weights are based
+            on relative positions. For example, the weights of :math:`x_0` and :math:`x_2`
+            used in calculating the final weighted average of
+            [:math:`x_0`, None, :math:`x_2`] are :math:`1-\alpha` and :math:`1` if
+            ``adjust=True``, and :math:`1-\alpha` and :math:`\alpha` if ``adjust=False``.
+
 
         Examples
         --------
@@ -4750,6 +4778,7 @@ class Series:
         adjust: bool = True,
         bias: bool = False,
         min_periods: int = 1,
+        ignore_na: bool = True,
     ) -> Series:
         r"""
         Exponentially-weighted moving variance.
@@ -4792,6 +4821,19 @@ class Series:
         min_periods
             Minimum number of observations in window required to have a value
             (otherwise result is null).
+        ignore_na : bool, default True
+            Ignore missing values when calculating weights.
+            - When ``ignore_na=False`` , weights are based on absolute positions.
+            For example, the weights of :math:`x_0` and :math:`x_2` used in calculating
+            the final weighted average of [:math:`x_0`, None, :math:`x_2`] are
+            :math:`(1-\alpha)^2` and :math:`1` if ``adjust=True``, and
+            :math:`(1-\alpha)^2` and :math:`\alpha` if ``adjust=False``.
+            - When ``ignore_na=True`` (default), weights are based
+            on relative positions. For example, the weights of :math:`x_0` and :math:`x_2`
+            used in calculating the final weighted average of
+            [:math:`x_0`, None, :math:`x_2`] are :math:`1-\alpha` and :math:`1` if
+            ``adjust=True``, and :math:`1-\alpha` and :math:`\alpha` if ``adjust=False``.
+
 
         Examples
         --------

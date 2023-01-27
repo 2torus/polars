@@ -93,7 +93,7 @@ mod test {
     #[test]
     fn test_ewm_mean_with_null() {
         let xs = vec![Some(1.0f32), None, Some(1.0f32), Some(1.0f32)].into_iter();
-        let result = ewm_mean(xs, 0.5, false, 2);
+        let result = ewm_mean(xs, 0.5, false, 2, true);
         let expected = PrimitiveArray::from([None, None, Some(1.0f32), Some(1.0f32)]);
         assert_eq!(result, expected);
 

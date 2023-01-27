@@ -155,7 +155,7 @@ mod test {
     #[test]
     fn test_emw_var_adjusted_biased() {
         let xs = Vec::from(XS);
-        let polars_result = ewm_var(xs, ALPHA, true, true, 0);
+        let polars_result = ewm_var(xs, ALPHA, true, true, 0, true);
         let pandas_result = PrimitiveArray::from([
             Some(0.0),
             Some(3.555555555555556),
@@ -171,7 +171,7 @@ mod test {
     #[test]
     fn test_emw_var_adjusted_unbiased() {
         let xs = Vec::from(XS);
-        let polars_result = ewm_var(xs, ALPHA, true, false, 0);
+        let polars_result = ewm_var(xs, ALPHA, true, false, 0, true);
         // NOTE: pandas actually returns `nan` for the first entry here, but that
         // is inconsistent with the other var calculations.
         let pandas_result = PrimitiveArray::from([
@@ -189,7 +189,7 @@ mod test {
     #[test]
     fn test_emw_var_unadjusted_biased() {
         let xs = Vec::from(XS);
-        let polars_result = ewm_var(xs, ALPHA, false, true, 0);
+        let polars_result = ewm_var(xs, ALPHA, false, true, 0, true);
         let pandas_result = PrimitiveArray::from([
             Some(0.0),
             Some(4.0),
@@ -205,7 +205,7 @@ mod test {
     #[test]
     fn test_emw_var_unadjusted_unbiased() {
         let xs = Vec::from(XS);
-        let polars_result = ewm_var(xs, ALPHA, false, false, 0);
+        let polars_result = ewm_var(xs, ALPHA, false, false, 0, true);
         // NOTE: pandas actually returns `nan` for the first entry here, but that
         // is inconsistent with the other var calculations.
         let pandas_result = PrimitiveArray::from([
