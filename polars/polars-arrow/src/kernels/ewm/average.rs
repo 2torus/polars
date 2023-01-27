@@ -22,9 +22,10 @@ where
     let mut opt_mean = None;
     let mut non_null_cnt = 0usize;
 
-    let wgt = alpha;
+    let mut current_wgt = alpha;
     let mut wgt_sum = if adjust { T::zero() } else { T::one() };
 
+    let mut current_one_sub_alpha = T::one() - alpha;
     xs.into_iter()
         .map(|opt_x| {
             if let Some(x) = opt_x {
@@ -32,11 +33,23 @@ where
 
                 let prev_mean = opt_mean.unwrap_or(x);
 
-                wgt_sum = one_sub_alpha * wgt_sum + wgt;
+                wgt_sum = current_one_sub_alpha * wgt_sum + current_wgt;
 
-                let curr_mean = prev_mean + (x - prev_mean) * wgt / wgt_sum;
+                let curr_mean = prev_mean + (x - prev_mean) * current_wgt / wgt_sum;
+
+                // one we encounter a non null element
+                // we reset our counting of na's
+                // back to original weights
+                current_wgt = alpha;
+                current_one_sub_alpha = one_sub_alpha;
 
                 opt_mean = Some(curr_mean);
+            } else if !ignore_na {
+                // if we can't ignore nulls,
+                // we need to increment the powers of alpha in the weight in order to remember
+                // the skipped na's
+                current_wgt = current_wgt * alpha;
+                current_one_sub_alpha = T::one()  - current_wgt;
             }
             match non_null_cnt < min_periods {
                 true => None,
@@ -88,6 +101,15 @@ mod test {
             };
             assert_eq!(result, expected);
         }
+    }
+    #[test]
+    fn test_ewm_mean_ignore_null_false_as_in_github_issue_5749() {
+        let xs = vec![Some(1.0f64), None, Some(2.0f64), Some(3.0f64),
+                      None, Some(4.0f64), Some(5.0f64), Some(6.0f64)];
+        let result = ewm_mean(xs, 2./3., true, 0, true);
+        let expected = PrimitiveArray::from([Some(1.0), Some(1.0), Some(1.75),
+            Some(2.6153846153846154), Some(2.6153846153846154), Some(3.55), Some(4.520661157024794), Some(5.5082417582417578)]);
+        assert_eq!(result, expected);
     }
 
     #[test]
